@@ -33,6 +33,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.Callback
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -176,6 +178,11 @@ class OrderServicesController : ButterKnifeController() {
       }
     }
     recyclerView.adapter = adapter
+    toolbar.inflateMenu(R.menu.order_services)
+    toolbar.menu.findItem(R.id.shuffle).setOnMenuItemClickListener {
+      adapter.shuffle()
+      true
+    }
     val callback = MoveCallback { start, end -> adapter.move(start, end) }
     ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
 
@@ -242,6 +249,24 @@ private class Adapter(
 
   init {
     setHasStableIds(true)
+  }
+
+  fun shuffle() {
+    val current = items.toList()
+    items.shuffle()
+    DiffUtil.calculateDiff(object : Callback() {
+      override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return current[oldItemPosition].id == items[newItemPosition].id
+      }
+
+      override fun getOldListSize() = current.size
+
+      override fun getNewListSize() = items.size
+
+      override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return current[oldItemPosition] == items[newItemPosition]
+      }
+    }).dispatchUpdatesTo(this)
   }
 
   override fun getItemId(position: Int): Long {
