@@ -83,6 +83,8 @@ class MainActivity : BaseActivity() {
     if (!router.hasRootController()) {
       router.setRoot(RouterTransaction.with(PagerController()))
     }
+
+    println("changed")
   }
 
 
