@@ -35,6 +35,7 @@ subprojects {
       jcenter()
       maven { url deps.build.repositories.plugins }
       maven { url deps.build.repositories.snapshots }
+      maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
     }
 
     dependencies {
@@ -58,6 +59,7 @@ subprojects {
     maven { url deps.build.repositories.jitpack }
     maven { url deps.build.repositories.snapshots }
     maven { url 'https://oss.jfrog.org/libs-snapshot' }
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
   }
 
   configurations.all {
