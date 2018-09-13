@@ -32,6 +32,7 @@ data class AuthInterceptor(private val method: String,
         .newBuilder()
         .addHeader("Authorization", method + " " + accessToken)
         .build()
+    println("changed")
     return chain.proceed(request)
   }
 
