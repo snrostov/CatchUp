@@ -29,6 +29,7 @@ fun View.setLightStatusBar() {
     flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     systemUiVisibility = flags
   }
+  println("changed")
 }
 
 fun View.clearLightStatusBar() {
